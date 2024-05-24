@@ -1,6 +1,6 @@
-package com.teamsparta.springtodo.domain.entity
+package com.teamsparta.springtodo.todo.entity
 
-import com.teamsparta.springtodo.domain.dto.TodoResponse
+import com.teamsparta.springtodo.todo.dto.TodoResponse
 import jakarta.persistence.*
 
 import java.time.ZonedDateTime
@@ -21,6 +21,9 @@ class Todo(
     @Column(nullable = false, updatable = false)
     val createdAt: ZonedDateTime,
 
+    @Column(nullable = false)
+    var isComplete: Boolean = false,
+
     @Column(name = "author")
     val author: String
 ) {
@@ -30,6 +33,7 @@ class Todo(
             title = this.title,
             content = this.content,
             author = this.author,
+            isComplete = this.isComplete,
             createdate = this.createdAt
         )
     }

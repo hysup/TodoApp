@@ -1,10 +1,11 @@
-package com.teamsparta.springtodo.domain.service
+package com.teamsparta.springtodo.todo.service
 
-import com.teamsparta.springtodo.domain.dto.CreateTodoRequest
-import com.teamsparta.springtodo.domain.dto.TodoResponse
-import com.teamsparta.springtodo.domain.dto.UpdateTodoRequest
-import com.teamsparta.springtodo.domain.entity.Todo
-import com.teamsparta.springtodo.domain.repository.TodoRepository
+import com.teamsparta.springtodo.todo.dto.CompleteTodoRequest
+import com.teamsparta.springtodo.todo.dto.CreateTodoRequest
+import com.teamsparta.springtodo.todo.dto.TodoResponse
+import com.teamsparta.springtodo.todo.dto.UpdateTodoRequest
+import com.teamsparta.springtodo.todo.entity.Todo
+import com.teamsparta.springtodo.todo.repository.TodoRepository
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -33,7 +34,8 @@ class TodoServiceImple(
             title = request.title,
             content = request.content,
             createdAt = ZonedDateTime.now(),
-            author = request.author
+            author = request.author,
+            isComplete = true
         )
         val savedTodo = todoRepository.save(todo)
         return savedTodo.toResponse()
@@ -47,6 +49,7 @@ class TodoServiceImple(
 
         todo.title = request.title
         todo.content = request.content
+        todo.isComplete = true
 
         val updatedTodo = todoRepository.save(todo)
         return updatedTodo.toResponse()
@@ -54,11 +57,28 @@ class TodoServiceImple(
 
     @Transactional
     override fun deleteTodo(todoId: Long) {
-        val todo = todoRepository.findByIdOrNull(todoId) ?: throw EntityNotFoundException("TodoId")
+        todoRepository.findByIdOrNull(todoId) ?: throw EntityNotFoundException("TodoId")
         todoRepository.deleteById(todoId)
 
     }
 
+    @Transactional
+    override fun completeTodo(todoId: Long, request: CompleteTodoRequest): TodoResponse {
+        val todo =
+            todoRepository.findById(todoId).orElseThrow { EntityNotFoundException("Todo not found with id $todoId") }
+        todo.isComplete = true
+        return todo.toResponse()
 
+    }
 }
+
+
+
+
+
+
+
+
+
+
 
