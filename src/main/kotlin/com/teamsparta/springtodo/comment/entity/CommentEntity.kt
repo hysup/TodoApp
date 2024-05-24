@@ -1,27 +1,32 @@
 package com.teamsparta.springtodo.comment.entity
 
+import com.teamsparta.springtodo.todo.entity.Todo
 import jakarta.persistence.*
 import java.time.ZonedDateTime
 
 @Entity
 @Table(name = "comment")
  class CommentEntity(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
 
-   @Column(name = "content")
+    @Column(name = "content")
     val content: String,
 
-    @Column(name = "authorId")
+    @Column(name = "authorName")
     val authorName: String,
 
     @Column(name = "password")
     val password: String,
 
-     @Column(nullable = false, updatable = false)
-     var createdAt: ZonedDateTime
+    @Column(nullable = false, updatable = false)
+    var createdAt: ZonedDateTime,
+
+    @ManyToOne
+    val todo: Todo
 
 
-)
+){
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   var id: Long? = null
+ }
 

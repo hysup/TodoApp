@@ -8,7 +8,7 @@ import com.teamsparta.springtodo.comment.dto.UpdateCommentRequest
 
 interface CommentService {
 
-    fun createComment(createCommentRequest: CreateCommentRequest): CommentResponse
+    fun createComment(todoId: Long, createCommentRequest: CreateCommentRequest): CommentResponse
 
     fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentResponse
 
