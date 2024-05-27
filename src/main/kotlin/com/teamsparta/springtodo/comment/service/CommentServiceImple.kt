@@ -1,16 +1,13 @@
 package com.teamsparta.springtodo.comment.service
 
+
 import com.teamsparta.springtodo.comment.dto.CommentResponse
 import com.teamsparta.springtodo.comment.dto.CreateCommentRequest
 import com.teamsparta.springtodo.comment.dto.UpdateCommentRequest
-import com.teamsparta.springtodo.comment.entity.CommentEntity
 import com.teamsparta.springtodo.comment.repository.CommentRepository
 import com.teamsparta.springtodo.todo.repository.TodoRepository
-import jakarta.persistence.EntityNotFoundException
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.ZonedDateTime
 
 @Service
 class CommentServiceImple(

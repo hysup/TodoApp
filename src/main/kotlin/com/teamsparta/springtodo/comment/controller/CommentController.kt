@@ -6,33 +6,35 @@ import com.teamsparta.springtodo.comment.dto.UpdateCommentRequest
 import com.teamsparta.springtodo.comment.service.CommentService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.http.ResponseEntity.status
+
 import org.springframework.web.bind.annotation.*
 
-@RequestMapping("/api/v1/todo/{todoId}/comments")
+@RequestMapping("/api/v1/todos/{todoId}/comments")
 @RestController
-class CommentController (
-private val commentService: CommentService
+class CommentController(
+    private val commentService: CommentService
 ) {
 
     @PostMapping()
-    fun createComment(@PathVariable todoId: Long,
-                      @RequestBody createcommentrequest: CreateCommentRequest
+    fun createComment(
+        @PathVariable todoId: Long,
+        @RequestBody createCommentRequest: CreateCommentRequest
     ): ResponseEntity<CommentResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(commentService.createComment(todoId, createcommentrequest))
+            .body(commentService.createComment(todoId, createCommentRequest))
 
 
     }
 
     @PutMapping("/{commentId}")
-    fun updateComment(@PathVariable commentId: Long,
-                      @RequestBody updatecommentrequest: UpdateCommentRequest
+    fun updateComment(
+        @PathVariable commentId: Long,
+        @RequestBody updateCommentRequest: UpdateCommentRequest
     ): ResponseEntity<CommentResponse> {
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(commentService.updateComment(commentId, updatecommentrequest))
+            .body(commentService.updateComment(commentId, updateCommentRequest))
     }
 
     @DeleteMapping("/{commentId}")
@@ -42,7 +44,7 @@ private val commentService: CommentService
             .noContent()
             .build()
     }
-    }
+}
 
 
 
