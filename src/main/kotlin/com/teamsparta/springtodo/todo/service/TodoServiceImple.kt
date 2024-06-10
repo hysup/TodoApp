@@ -1,5 +1,6 @@
 package com.teamsparta.springtodo.todo.service
 
+import com.teamsparta.springtodo.config.aop.StopWatch
 import com.teamsparta.springtodo.todo.dto.CompleteTodoRequest
 import com.teamsparta.springtodo.todo.dto.CreateTodoRequest
 import com.teamsparta.springtodo.todo.dto.TodoResponse
@@ -21,7 +22,7 @@ class TodoServiceImple(
         return todoRepository.findAll().map { it.toResponse() }
     }
 
-
+@Transactional
     override fun getTodoById(todoId: Long): TodoResponse {
         val todo =
             todoRepository.findById(todoId).orElseThrow { EntityNotFoundException("Todo not found with id $todoId") }

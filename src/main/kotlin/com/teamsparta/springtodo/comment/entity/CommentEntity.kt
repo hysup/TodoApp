@@ -1,5 +1,6 @@
 package com.teamsparta.springtodo.comment.entity
 
+import com.teamsparta.springtodo.comment.dto.CommentResponse
 import com.teamsparta.springtodo.todo.entity.Todo
 import jakarta.persistence.*
 import java.time.ZonedDateTime
@@ -8,8 +9,12 @@ import java.time.ZonedDateTime
 @Table(name = "comment")
  class CommentEntity(
 
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   var id: Long? = null,
+
     @Column(name = "content")
-    val content: String,
+    var content: String,
 
     @Column(name = "authorName")
     val authorName: String,
@@ -20,13 +25,25 @@ import java.time.ZonedDateTime
     @Column(nullable = false, updatable = false)
     var createdAt: ZonedDateTime,
 
+   @Column(nullable = false)
+   var updatedAt: ZonedDateTime? = null,
+
     @ManyToOne
     val todo: Todo
 
 
 ){
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   var id: Long? = null
+   fun toResponse(): CommentResponse {
+      return CommentResponse(
+         id = this.id ?: throw IllegalStateException("Comment Id cannot be null"),
+         authorName = this.authorName,
+         content = this.content,
+         createdAt = this.createdAt,
+         password = this.password,
+      )
+
  }
+}
+
+
 

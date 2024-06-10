@@ -6,6 +6,7 @@ import com.teamsparta.springtodo.comment.dto.UpdateCommentRequest
 import com.teamsparta.springtodo.comment.service.CommentService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 
 import org.springframework.web.bind.annotation.*
 
@@ -30,7 +31,7 @@ class CommentController(
     @PutMapping("/{commentId}")
     fun updateComment(
         @PathVariable commentId: Long,
-        @RequestBody updateCommentRequest: UpdateCommentRequest
+        @RequestBody updateCommentRequest: UpdateCommentRequest, @PathVariable todoId: String
     ): ResponseEntity<CommentResponse> {
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -38,7 +39,7 @@ class CommentController(
     }
 
     @DeleteMapping("/{commentId}")
-    fun deleteComment(@PathVariable commentId: Long): ResponseEntity<Unit> {
+    fun deleteComment(@PathVariable commentId: Long, @PathVariable todoId: String): ResponseEntity<Unit> {
         commentService.deleteComment(commentId)
         return ResponseEntity
             .noContent()

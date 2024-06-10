@@ -1,6 +1,4 @@
 package com.teamsparta.springtodo.todo.controller
-
-
 import com.teamsparta.springtodo.todo.dto.CreateTodoRequest
 import com.teamsparta.springtodo.todo.dto.TodoResponse
 import com.teamsparta.springtodo.todo.dto.UpdateTodoRequest
@@ -16,14 +14,13 @@ class TodoListController(
     private val todoService: TodoService
 
 ) {
-
-    @GetMapping()
+@GetMapping()
     fun getTodoList(): ResponseEntity<List<TodoResponse>> {
         return ResponseEntity.status(HttpStatus.OK)
             .body(todoService.getAllTodoList())
     }
 
-    @GetMapping("{todoId}")
+    @GetMapping("/{todoId}")
     fun getTodo(@PathVariable todoId: Long): ResponseEntity<TodoResponse> {
         return ResponseEntity.status(HttpStatus.OK)
             .body(todoService.getTodoById(todoId))
@@ -39,7 +36,7 @@ class TodoListController(
 
     }
 
-    @PutMapping("{todoId}")
+    @PutMapping("/{todoId}")
     fun updateTodo(
         @PathVariable todoId: Long,
         @RequestBody updateTodoRequest: UpdateTodoRequest
@@ -49,7 +46,7 @@ class TodoListController(
 
     }
 
-    @DeleteMapping("{todoId}")
+    @DeleteMapping("/{todoId}")
     fun deleteTodo(@PathVariable todoId: Long): ResponseEntity<Unit> {
         todoService.deleteTodo(todoId)
         return ResponseEntity
