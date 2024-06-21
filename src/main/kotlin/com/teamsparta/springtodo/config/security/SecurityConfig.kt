@@ -14,25 +14,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter, //필터 등록
     private val authenticationEntryPoint: CustomAuthenticationEntryPoint
 ) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
-            .httpBasic { it.disable() }
-            .formLogin { it.disable() }
-            .csrf { it.disable() }
-            .authorizeHttpRequests {
+            .httpBasic { it.disable() } //HTTP Basic 인증사용 비활성화
+            .formLogin { it.disable() } //로그인 인증사용 비활성화
+            .csrf { it.disable() } //공격방지 기능 비활성화
+            .authorizeHttpRequests { //HTTP요청에 대한 인가설정
                 it.requestMatchers (
                     "/login",
                     "/signup",
                     "/swagger-ui/**",
                     "/v3/api-docs/**"
 
-                    ).permitAll()
-                    .anyRequest().authenticated()
+                    ).permitAll() //위 경로들은 모든 사용자에게 허용
+                    .anyRequest().authenticated() //그외는 인증을 거친후 접근가능
                 }
                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling {

@@ -1,5 +1,6 @@
 package com.teamsparta.springtodo.todo.entity
 
+import com.teamsparta.springtodo.config.ZonedDateTimeConverter
 import com.teamsparta.springtodo.todo.dto.TodoResponse
 import jakarta.persistence.*
 
@@ -18,7 +19,9 @@ class Todo(
     @Column(name = "content")
     var content: String,
 
+
     @Column(nullable = false, updatable = false)
+    @Convert(converter = ZonedDateTimeConverter::class)
     val createdAt: ZonedDateTime,
 
     @Column(nullable = false)
@@ -34,7 +37,7 @@ class Todo(
             content = this.content,
             author = this.author,
             isComplete = this.isComplete,
-            createdate = this.createdAt
+            createdAt = this.createdAt
         )
     }
 }

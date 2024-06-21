@@ -1,13 +1,15 @@
 package com.teamsparta.springtodo.todo.service
 
-import com.teamsparta.springtodo.config.aop.StopWatch
 import com.teamsparta.springtodo.todo.dto.CompleteTodoRequest
 import com.teamsparta.springtodo.todo.dto.CreateTodoRequest
 import com.teamsparta.springtodo.todo.dto.TodoResponse
 import com.teamsparta.springtodo.todo.dto.UpdateTodoRequest
 import com.teamsparta.springtodo.todo.entity.Todo
+import com.teamsparta.springtodo.todo.entity.TodoStatus
 import com.teamsparta.springtodo.todo.repository.TodoRepository
 import jakarta.persistence.EntityNotFoundException
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -16,7 +18,7 @@ import java.time.ZonedDateTime
 
 @Service
 class TodoServiceImple(
-    private val todoRepository: TodoRepository
+    private val todoRepository: TodoRepository,
 ) : TodoService {
     override fun getAllTodoList(): List<TodoResponse> {
         return todoRepository.findAll().map { it.toResponse() }
@@ -71,7 +73,14 @@ class TodoServiceImple(
         return todo.toResponse()
 
     }
-}
+
+    override fun searchTodoList(title: String): List<TodoResponse>? {
+        return todoRepository.searchTodoListByTitle(title).map { it.toResponse() }
+    }
+
+
+    }
+
 
 
 

@@ -14,9 +14,20 @@ class TodoListController(
     private val todoService: TodoService
 
 ) {
+
+    @GetMapping("/search")
+    fun searchTodoList(@RequestParam(value = "title")title: String): ResponseEntity<List<TodoResponse>> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(todoService.searchTodoList(title))
+    }
+
 @GetMapping()
-    fun getTodoList(): ResponseEntity<List<TodoResponse>> {
-        return ResponseEntity.status(HttpStatus.OK)
+    fun getTodoList(
+
+    ): ResponseEntity<List<TodoResponse>> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
             .body(todoService.getAllTodoList())
     }
 

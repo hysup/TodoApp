@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 
 import org.springframework.web.bind.annotation.*
 
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/api/v1/todos/{todoId}/comments")
 @RestController
 class CommentController(

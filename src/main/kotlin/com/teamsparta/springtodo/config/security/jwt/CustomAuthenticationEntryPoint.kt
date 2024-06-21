@@ -10,7 +10,7 @@ import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
 
 @Component
-class CustomAuthenticationEntryPoint: AuthenticationEntryPoint {
+class CustomAuthenticationEntryPoint: AuthenticationEntryPoint { // 403이 아닌 401을 응답코드를 반환할 수  있도록, 예외처리
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
